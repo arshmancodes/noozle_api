@@ -6,14 +6,14 @@ exports.test = (req, res, next) => {
 
 exports.addScene = (req, res, next) => {
     
-    db.execute("INSERT INTO scene(scene_name, repeated, days, scene_desc, time, color, intensity, playSound, sound_id, ollie_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.body.scene_name, req.body.repeated, req.body.days, req.body.scene_desc, req.body.time, req.body.color, req.body.intensity, req.body.playSound, req.body.sound_id, req.body.ollie_id]).then(([rows, fieldData]) => {
+    db.execute("INSERT INTO scene(scene_name, repeated, isActive, days, scene_sleep_time, time, color, intensity, playSound, sound_id, ollie_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [req.body.scene_name, req.body.repeated, req.body.isActive, req.body.days, req.body.scene_sleep_time, req.body.time, req.body.color, req.body.intensity, req.body.playSound, req.body.sound_id, req.body.ollie_id]).then(([rows, fieldData]) => {
         res.status(200).json({
             success: true,
             message: "The alarm has been posted Successfully"
         })
     }).catch(err => {
         res.status(203).json({
-
+            success: false,
         })
     })
     
@@ -27,7 +27,7 @@ exports.getScenes = (req, res, next) => {
         {
             res.status(200).json({
                 success: true,
-                data: rows[0]
+                data: rows
             })
         }
         else
